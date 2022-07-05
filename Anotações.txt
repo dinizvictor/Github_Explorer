@@ -214,3 +214,20 @@ React - Biblioteca de criação de interfaces (WEB, Mobile, Realidade Virtual, T
 			}
 
 		}
+
+		function showWelcomeMessage(user: User){
+
+		}
+
+		*Adicionando o TypeScript -
+
+			Yarn - yarn add typescript -D
+				   yarn tsc --init (ou) yarn typescript --init
+
+		*Alterando o tsconfig.json - 
+
+			"lib": [
+			      "DOM",
+			      "DOM.Iterable",
+			      "ESNext"
+    		]
