@@ -199,3 +199,18 @@ React - Biblioteca de criação de interfaces (WEB, Mobile, Realidade Virtual, T
 		//  o useEffect entrará em loop.
 
 	** Toda vez que uma informação no estado ou propriedade do componente muda, ele é novamente renderizado.
+
+	TypeScript - Denominado superset (conjunto de funcionalidades adicionado por cima de uma linguagem), o TypeScript atua no JavaScript como um burst de ferramentas para a linguagem. Também é denominado como linguagem por alguns. Ele permite adicionar o formato das informações dos argumentos que serão fornecidos no código (tipagem). A tipagem dinâmica permite que qualquer dado possa ser fornecido como argumento sem especificar o tipo esperado. Com o TypeScript esse tipo pode ficar explicito.
+
+	Ex:
+
+		type User = {
+
+			name: string
+			email: string
+			address: {
+				city: string
+				state?: string
+			}
+
+		}
