@@ -1,0 +1,201 @@
+React - Biblioteca de criação de interfaces (WEB, Mobile, Realidade Virtual, TV)
+
+	Iniciando >>
+		
+		* Construção de Single-Page Applications - Ao contrário das tecnologias Server-Side Rendering (Lógica das Regras de Negócio e Interfaces partem do Back-end), o React lida com as interfaces, ao passo que o Back-end fica responsável apenas pela lógica das regras de negócio. Front-end e Back-end se comunicam através da API (Application Program Interface). Ser Single-Page, significa que a aplicação só recarrega os componentes necessários entre as interações ao invés de recarregar toda a página.
+
+		*Inicialização - Qualquer projeto JavaScript (React, React-Native, Node) precisa ser inicializado com a criação do package.json (arquivo em json de informações principais do projeto como nome, versão, arquivo principal, licença e dependências do projeto). O Yarn ou o NPM podem ser utilizados:
+			Yarn - yarn init -y
+			NPM - npm init -y
+
+		*Adicionando a biblioteca React -
+			Yarn - yarn add react (yarn.lock e a pasta node_modules (bibliotecas) também são criados no processo)
+
+		*Adicionando o React Dom (ferramenta de manipulação WEB) - 
+			Yarn - yarn add react-dom (DOM - Árvore de elementos do HTML convertida numa sintaxe de objeto JavaScript).
+
+		**A necessidade da importação de duas bibliotecas React se dá pelo motivo de existirem outras aplicações do React além do react-dom (WEB) como o react-native e etc.
+
+		*Pastas a serem adicionadas para o projeto base -
+			src - Pasta que guarda todo o código da aplicação.
+			public - Pasta com arquivos públicos como o index.html, favicon, robots (google).
+
+		**Projeto Github Explorer
+
+		*Babel - Ferramenta que converte todo o código javascript da aplicação para que possa ser compreendido em todos os browsers e nos ambientes de desenvolvimento também. Isso se dá devido ao alto número de atualizações que o Javascript sofre. Sendo assim, o Babel garante que os navegadores conseguirão entender possíveis novas features da linguagem ainda não implementadas.
+
+		*Adicionando o Babel (Como dependência de desenvolvimento (Não estará presente no deploy de produção - online) >> -D) - 
+
+			Yarn - yarn add @babel/core @babel/cli @babel/preset-env -D
+
+		*Usando o Babel
+			Yarn - yarn babel src/index.jsx --out-file dist/bundle.js
+			(o bundle conterá o código index.jsx convertido pelo Babel)
+
+		**Extensão do React - .jsx >> Introdução de HTML solto em códigos javascript.
+
+		*Webpack - Estipula uma série de configurações (loaders) que ensinam para a aplicação como tratar cada tipo de arquivo a ser importado (css, jpg, png, js), convertendo os mais diferentes tipos de arquivos em arquivos compreensíveis pelo browser. Se soma ao Babel, gerando um arquivo quase que ilegivel todo em Javascript para ser executado no browser.
+
+		*Adicionando o Webpack (-D) - 
+
+			Yarn - yarn add webpack webpack-cli -D
+
+		*Adicionando o DevServer (-D) -
+
+			Yarn - yarn add webpack-dev-server -D
+			**Configuração adicional no webpack.config.js
+
+		*Executando o modo DEV ou PRODUÇÂO definidos por script em package.json - 
+			"scripts": {
+			    "dev": "cross-env NODE_ENV=development webpack serve",
+			    "build": "cross-env NODE_ENV=production webpack"
+			}
+
+			yarn dev **(para modo DEV)
+			yarn build **(para modo PRODUÇÃO)
+
+			**O cross-env (yarn add cross-env) cria a variável de ambiente independente do SO. Existe uma opção de criar variável de ambiente no linux usando "<NOME_DA_VARIAVEL>=<VALOR> webpack"
+
+		*Importando arquivos CSS -
+			yarn add style-loader css-loader -D
+
+			**Assim, como com o babel-loader (conversor javascript), uma nova regra deve ser criada nas rules do module do webpack.config.js para a importação de arquivos .css nos arquivos .jsx.
+
+			module: {
+		        rules: [
+		            {
+		                test: /\.jsx$/,
+		                exclude: /node_modules/,
+		                use: 'babel-loader', //Importações convertidas pelo Babel
+		            },
+		            {
+		                test: /\.scss$/,
+		                exclude: /node_modules/,
+		                use: ['style-loader', 'css-loader', 'sass-loader'], //Importações de folhas de estilo css (permite o import './styles/global.css')
+		            }
+		        ]
+    		}
+
+    	*Adicionando o pre-processador de CSS SASS -
+
+    	yarn add node-sass sass-loader -D
+
+    	**O SASS permite o encadeamento das tags do CSS como, por exemplo, a estilização de todo h1 dentro da tag body. As estilizações encadeadas serão direcionadas somente para esses h1 dentro de body.
+
+    Componentes >> Os componentes estão para o React, assim como as tags estão para o HTML. São formas de encapsular código dentro de um elemento e este conterá sua própria funcionalidade, sua própria estilização e sua própria estrutura. Eles permitem que a aplicação se torne modular, onde cada componente será um pedaço que se conecta aos outros formando, no final, a aplicação em si.
+
+    	O componente é uma função que sempre começa com a letra maíuscula (Ex: App.jsx) e sempre deve haver somente um componente por arquivo.
+
+    		export function App(){
+
+    			return <h1> Hello World! </h1>
+
+    		}
+
+    	No React, a integração do javascript com o HTML é feita de forma muito natural. Na criação do componente RepositoryList, podemos ver que a variável repositoryName pode ser colocada no retorno HTML somente utilizando as chaves {} para interpolação.
+
+    		const repositoryName = 'unform';
+
+			export function RepositoryList() {
+
+			    return (
+
+			        <section className="repository-list">
+			            <h1>Lista de Repositórios</h1>
+			            <ul>
+			                <li>
+			                    <strong>{repositoryName}</strong>
+			                    <p>Forms in React</p>
+			                    <a href="">
+			                        Acessar repositório
+			                    </a>
+			                </li>
+			            </ul>
+			        </section>
+			    )
+			}
+
+	Propriedades >> As propriedades estão para os componentes, assim como os atributos estão para as tags. Elas podem mudar o comportamento do componente de acordo com o valor que recebem, assim como os atributos alteram o comportamento das tags. As propriedades geralmente são enviadas de um componente pai para um componente filho. No caso a seguir, temos RepositoryList enviando a propriedade "repository" para RepositoryItem. Em Item as propriedades são recebidas através da variável "props" que é usada como parâmetro na função do componente.
+
+		*Enviando propriedades - 
+
+			<ul>
+
+                <RepositoryItem repository="unform2" />
+                <RepositoryItem repository="unform3" />
+                <RepositoryItem repository="unform4" />
+                <RepositoryItem repository="unform5" />
+
+            </ul>
+
+        *Recebendo propriedades -
+
+
+        	export function RepositoryItem(props) {
+
+			    return (
+
+			        <li>
+			            <strong>{props.repository}</strong>
+			            <p>Forms in React</p>
+			            <a href="">
+			                Acessar repositório
+			            </a>
+			        </li>
+
+			    );
+			}
+
+	**Toda vez que temos dois componentes um embaixo do outro, sempre precisa existir um componente por volta deles. Ex:
+
+		export function App() {
+
+		    return (
+		        <div>
+		            <RepositoryList />
+		            <Counter />
+		        </div>
+		    )
+
+		}
+
+		*Podemos utilizar o Fragment (tag vazia) do React para não poluir o HTML gerado:
+
+		export function App() {
+
+		    return (
+		        <>
+		            <RepositoryList />
+		            <Counter />
+		        </>
+		    )
+
+		}
+
+
+	Estado do componente >> São variáveis monitoradas pelo React, as quais, quando possuem seus valores alterados, são atualizadas na renderização também. Importaremos o useState para manipular os estados.
+
+	**As funções do React que possuem use no nome, são denominadas Hooks.
+
+	Ex:
+		const [counter, setCounter] = useState(0); //Desestruturação de array
+
+    	function increment() {
+        	setCounter(counter + 1);
+    	}
+
+
+    Imutabilidade >> O React usa o conceito de LP de imutabilidade, onde uma variável nunca terá o seu valor alterado na memória diretamente. Por exemplo, para adicionar um novo elemento em um array, um array novo será criado com os valores antigos e o novo valor, ou seja, novas referências são criadas ao invés de alterar as que já existiam.
+
+    Fast Refresh >> Módulo que permite salvar o estado dos componentes quando o webpack dev server reseta a aplicação quando alteramos e salvamos o código. Útil para cenários em que o estado do componentes precisa ser mantido ao realizar alterações no código como, por exemplo, carrinhos de compras.
+
+    UseEffect (Hook) - O useEffect é outro hook do React que é amplamente usado. Ele dispara uma função quando algo (uma variável muda seu valor, etc) acontece.
+
+		useEffect(() => {
+
+		}, [repositories]) //P1 - Função a ser executada; P2 - Variável a ser vigiada (dependências).
+		//* Caso [] seja fornecido como dependência do useEffect, a função será executada uma única
+		//  vez quando o componente for exibido em tela. Se nada for passado no segundo parâmetro,
+		//  o useEffect entrará em loop.
+
+	** Toda vez que uma informação no estado ou propriedade do componente muda, ele é novamente renderizado.
