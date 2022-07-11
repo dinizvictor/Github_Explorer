@@ -3,11 +3,17 @@ import { useState, useEffect } from "react";
 
 import '../styles/repositories.scss';
 
-// https://api.github.com/orgs/rocketseat/repos
+interface Repository { //Tipo do estado
+
+    name: string;
+    description: string;
+    html_url: string;
+
+}
 
 export function RepositoryList() {
-
-    const [repositories, setRepositories] = useState([]); //Iniciando a lista de repositórios.
+    //useState<type> >> Generic do typescript para especificar o tipo do estado. type[] quando for um array.
+    const [repositories, setRepositories] = useState<Repository[]>([]); //Iniciando a lista de repositórios.
     // A chamada à API justifica a utilização de estados para armazenar os repositórios, pois
     // existe um tempo até a informação ser entregue à aplicação e a interface precisa ser capaz
     // de lidar com essa dinamicidade.

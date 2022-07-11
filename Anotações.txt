@@ -223,11 +223,8 @@ React - Biblioteca de criação de interfaces (WEB, Mobile, Realidade Virtual, T
 
 			Yarn - yarn add typescript -D
 				   yarn tsc --init (ou) yarn typescript --init
+				   yarn add @babel/preset-typescript -D
 
-		*Alterando o tsconfig.json - 
+		**O tsconfig.json precisa ser alterado.
 
-			"lib": [
-			      "DOM",
-			      "DOM.Iterable",
-			      "ESNext"
-    		]
+		*Configurando o webpack -
